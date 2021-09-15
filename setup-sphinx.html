@@ -2,10 +2,10 @@
 <html class="no-js" lang="zh_CN">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><link rel="index" title="索引" href="genindex.html" /><link rel="search" title="搜索" href="search.html" /><link rel="next" title="第零章：实验环境配置" href="0setup-devel-env.html" />
+    <meta name="color-scheme" content="light dark"><link rel="index" title="索引" href="genindex.html" /><link rel="search" title="搜索" href="search.html" /><link rel="prev" title="第零章：实验环境配置" href="0setup-devel-env.html" />
 
     <meta name="generator" content="sphinx-4.1.2, furo 2021.09.08"/>
-        <title>os-Tutorial-Book-Autumn2021 文档</title>
+        <title>修改和构建本项目 - os-Tutorial-Book-Autumn2021 文档</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=c7c65a82b42f6b978e58466c1e9ef2509836d916" />
     <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
@@ -123,7 +123,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="#"><div class="brand">os-Tutorial-Book-Autumn2021  文档</div></a>
+      <a href="index.html"><div class="brand">os-Tutorial-Book-Autumn2021  文档</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -143,7 +143,7 @@
   <aside class="sidebar-drawer">
     <div class="sidebar-container">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
   <span class="sidebar-brand-text">os-Tutorial-Book-Autumn2021  文档</span>
@@ -161,8 +161,8 @@
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">开发注记</span></p>
-<ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="setup-sphinx.html">修改和构建本项目</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+<ul class="current">
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">修改和构建本项目</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
 </ul>
 </li>
 </ul>
@@ -185,83 +185,26 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <div class="section" id="os-tutorial-book-2021-autumn">
-<h1>os-Tutorial-Book 2021 Autumn<a class="headerlink" href="#os-tutorial-book-2021-autumn" title="永久链接至标题">¶</a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">正文</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="0setup-devel-env.html">第零章：实验环境配置</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="0setup-devel-env.html#os">OS 环境配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="0setup-devel-env.html#id2">开发环境配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="0setup-devel-env.html#qemu">Qemu 模拟器安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="0setup-devel-env.html#id3">试运行框架代码</a></li>
-<li class="toctree-l2"><a class="reference internal" href="0setup-devel-env.html#gdb">GDB 调试支持*</a></li>
-</ul>
-</li>
-</ul>
-</div>
+          <div class="section" id="id1">
+<h1>修改和构建本项目<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<div class="section" id="id1">
-<h2>项目简介<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p>本教程展示了如何 <strong>从零开始</strong> 用 <strong>Rust/C</strong> 语言写一个基于 <strong>RISC-V</strong> 架构的 <strong>类 Unix 内核</strong> 。</p>
-<p>为 Rust 和 C 各自文档合并而成，用于 2021 年秋季学期操作系统课堂教学。</p>
-</div>
-<div class="section" id="id2">
-<h2>导读<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
-<p>请先阅读 <a class="reference internal" href="0setup-devel-env.html"><span class="doc">第零章：实验环境配置</span></a> 完成环境配置。</p>
-<p>以下是读者为了完成实验需掌握的技术，你可以在实操中熟悉它们。</p>
-<ul class="simple">
-<li><p>阅读简单的 Makefile 文件；</p></li>
-<li><p>阅读简单的 RISC-V 汇编代码；</p></li>
-<li><p>git 的基本功能，解决 git merge 冲突的办法；</p></li>
-<li><dl class="simple">
-<dt>实验所需语言的基本语法等：</dt><dd><ul>
-<li><p>Rust 基本语法和一些进阶语法，包括 <strong>Cargo 项目结构、Trait、函数式编程、Unsafe Rust、错误处理等</strong> 。</p></li>
-<li><p>C 基本语法</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p>本文档使用了一些插件来合并两种语言的文档，你会见到许多这样的模块：</p>
-<div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-UnVzdA==" aria-selected="true" class="sphinx-tabs-tab code-tab group-tab" id="tab-0-UnVzdA==" name="UnVzdA==" role="tab" tabindex="0">Rust</button><button aria-controls="panel-0-Qw==" aria-selected="false" class="sphinx-tabs-tab code-tab group-tab" id="tab-0-Qw==" name="Qw==" role="tab" tabindex="-1">C</button></div><div aria-labelledby="tab-0-UnVzdA==" class="sphinx-tabs-panel code-tab group-tab" id="panel-0-UnVzdA==" name="UnVzdA==" role="tabpanel" tabindex="0"><div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="fm">println!</span><span class="p">(</span><span class="s">"Hello OS"</span><span class="p">);</span><span class="w"></span>
-</pre></div>
-</div>
-</div><div aria-labelledby="tab-0-Qw==" class="sphinx-tabs-panel code-tab group-tab" hidden="true" id="panel-0-Qw==" name="Qw==" role="tabpanel" tabindex="0"><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">printf</span><span class="p">(</span><span class="s">"Hello OS"</span><span class="p">);</span><span class="w"></span>
-</pre></div>
-</div>
-</div></div>
-<p>本文档正在逐渐合并分属于两种语言的文档。</p>
-</div>
-<div class="section" id="id3">
-<h2>鸣谢<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
-<p>本项目基于 <cite>2021 年春季学期操作系统实验指导书 &lt;https://rcore-os.github.io/rCore-Tutorial-Book-v3/index.html&gt;</cite> ，重构的目标是在保留结构的基础上屏蔽不必要的细节，缩短篇幅，优化语言，降低阅读成本。</p>
-<p>如果你觉得本教程某些章节不够细致或不够连贯，可以参考春季学期实验指导书的对应章节。</p>
-<div class="admonition note">
-<p class="admonition-title">注解</p>
-<p>这是一个注解，以这种方式出现的卡片提供了非必要的背景知识，你可以选择忽略。</p>
-</div>
-<div class="admonition attention">
-<p class="admonition-title">注意</p>
-<p>虽然实验本身在总评中占比有限，但根据往届经验，考试中可能大量出现与编程作业、思考题、代码实现思路直接相关的题目。</p>
-</div>
-</div>
-<div class="section" id="id4">
-<h2>项目协作<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
-<ul class="simple">
-<li><p>待补充</p></li>
-<li><p>时间仓促，本项目还有很多不完善之处，欢迎大家积极在每一个章节的评论区留言，或者提交 Issues 或 Pull Requests，让我们
-一起努力让这本书变得更好！</p></li>
-</ul>
-</div>
+<p>TL;DR: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">.venv</span></code> 创建一个虚拟环境（你也可以使用 conda 等工具），activate 后 <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code>。</p>
+<ol class="arabic simple">
+<li><p>参考 <a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/installation.html">这里</a> 安装 Sphinx。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sphinx_rtd_theme</span></code> 安装 Read The Docs 主题。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">jieba</span></code> 安装中文分词。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">sphinx-comments</span></code> 安装 Sphinx 讨论区插件。</p></li>
+<li><p><span class="xref std std-doc">/rest-example</span> 是 ReST 的一些基本语法，也可以参考已完成的文档。</p></li>
+<li><p>修改之后，在项目根目录下 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">html</span></code> 即可在 <code class="docutils literal notranslate"><span class="pre">build/html/index.html</span></code> 查看本地构建的主页。请注意在修改章节目录结构之后需要 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clean</span></code> 一下，不然可能无法正常更新。</p></li>
+<li><p>确认修改无误之后，将更改提交到自己的仓库，然后向项目仓库提交 Pull Request。如有问题，可直接提交 Issue 或课程微信群内联系助教。</p></li>
+</ol>
 </div>
 
         </article>
@@ -269,16 +212,18 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="0setup-devel-env.html">
+          
+          <a class="prev-page" href="0setup-devel-env.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
-                  <span>Next</span>
+                  <span>Previous</span>
                 </div>
+                
                 <div class="title">第零章：实验环境配置</div>
+                
               </div>
-              <svg><use href="#svg-arrow-right"></use></svg>
             </a>
-          
         </div>
 
         <div class="related-information">
@@ -287,7 +232,7 @@
               and
               <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
               <a href="https://github.com/pradyunsg/furo">Furo theme</a>. |
-            <a class="muted-link" href="_sources/index.rst.txt"
+            <a class="muted-link" href="_sources/setup-sphinx.rst.txt"
                rel="nofollow">
               显示源代码
             </a>
@@ -295,30 +240,8 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            目录
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">os-Tutorial-Book 2021 Autumn</a><ul>
-<li><a class="reference internal" href="#id1">项目简介</a></li>
-<li><a class="reference internal" href="#id2">导读</a></li>
-<li><a class="reference internal" href="#id3">鸣谢</a></li>
-<li><a class="reference internal" href="#id4">项目协作</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
@@ -362,7 +285,6 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
-    <script src="_static/tabs.js"></script>
     <script src="_static/translations.js"></script>
     </body>
 </html>

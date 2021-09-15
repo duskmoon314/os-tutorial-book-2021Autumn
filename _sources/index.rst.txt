@@ -8,7 +8,16 @@ os-Tutorial-Book 2021 Autumn
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: 正文
+
+   0setup-devel-env
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 开发注记
+   :hidden:
+
+   setup-sphinx
 
 项目简介
 -----------------------------------------------

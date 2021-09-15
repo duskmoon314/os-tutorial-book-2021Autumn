@@ -1,0 +1,722 @@
+<!doctype html>
+<html class="no-js" lang="zh_CN">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="索引" href="genindex.html" /><link rel="search" title="搜索" href="search.html" /><link rel="next" title="修改和构建本项目" href="setup-sphinx.html" /><link rel="prev" title="os-Tutorial-Book 2021 Autumn" href="index.html" />
+
+    <meta name="generator" content="sphinx-4.1.2, furo 2021.09.08"/>
+        <title>第零章：实验环境配置 - os-Tutorial-Book-Autumn2021 文档</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=c7c65a82b42f6b978e58466c1e9ef2509836d916" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=16fb25fabf47304eee183a5e9af80b1ba98259b1" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">os-Tutorial-Book-Autumn2021  文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">os-Tutorial-Book-Autumn2021  文档</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder=搜索 name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">正文</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">第零章：实验环境配置</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">开发注记</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="setup-sphinx.html">修改和构建本项目</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="simple">
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <div class="section" id="id1">
+<h1>第零章：实验环境配置<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<p>本节我们将完成环境配置并成功运行 rCore-Tutorial / uCore-Tutorial 。整个流程分为下面几个部分：</p>
+<ul class="simple">
+<li><p>OS 环境配置</p></li>
+<li><dl class="simple">
+<dt>开发环境配置</dt><dd><ul>
+<li><p>Rust 开发环境配置</p></li>
+<li><p>C 开发环境配置</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Qemu 模拟器安装</p></li>
+<li><p>试运行框架代码</p></li>
+</ul>
+<p>如果你在环境配置中遇到了无法解决的问题，请在本节讨论区留言，我们会尽力提供帮助。</p>
+<div class="section" id="os">
+<h2>OS 环境配置<a class="headerlink" href="#os" title="永久链接至标题">¶</a></h2>
+<p>目前，实验主要支持 Ubuntu18.04/20.04 操作系统。使用 Windows10 和 macOS 的读者，可以安装一台 Ubuntu18.04 虚拟机 (如 VMware 或 VirtualBox) 或 Docker 进行实验。</p>
+<p>Windows10 用户可以通过系统内置的 <strong>WSL2</strong> 虚拟机（请不要使用 WSL1）来安装 Ubuntu 18.04 / 20.04 。读者请自行在互联网上搜索相关安装教程，或 <a class="reference external" href="https://docs.microsoft.com/zh-cn/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package">适用于 Linux 的 Windows 子系统安装指南 (Windows 10)</a> 。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p><strong>Docker 开发环境</strong></p>
+<p>我们也提供 Docker 镜像用于熟悉 Docker 的同学使用。如果你不熟悉或者第一次听说，可以先参考 <a class="reference external" href="https://www.docker.com/get-started">Docker 官网</a> 进行安装。</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-UnVzdA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-UnVzdA==" name="UnVzdA==" role="tab" tabindex="0">Rust</button><button aria-controls="panel-0-Qw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-Qw==" name="Qw==" role="tab" tabindex="-1">C</button></div><div aria-labelledby="tab-0-UnVzdA==" class="sphinx-tabs-panel group-tab" id="panel-0-UnVzdA==" name="UnVzdA==" role="tabpanel" tabindex="0"><p>感谢 dinghao188 和张汉东老师帮忙配置好的 Docker 开发环境，进入 Docker 开发环境之后不需要任何软件工具链的安装和配置，可以直接将 tutorial 运行起来，目前应该仅支持将 tutorial 运行在 Qemu 模拟器上。</p>
+<p>使用方法如下（以 Ubuntu18.04 为例）：</p>
+<ol class="arabic simple">
+<li><p>通过 <code class="docutils literal notranslate"><span class="pre">su</span></code> 切换到管理员账户 <code class="docutils literal notranslate"><span class="pre">root</span></code> ；</p></li>
+<li><p>在 <code class="docutils literal notranslate"><span class="pre">rCore-Tutorial</span></code> 根目录下 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">docker</span></code> 进入到 Docker 环境；</p></li>
+<li><p>进入 Docker 之后，会发现当前处于根目录 <code class="docutils literal notranslate"><span class="pre">/</span></code> ，我们通过 <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">mnt</span></code> 将当前工作路径切换到 <code class="docutils literal notranslate"><span class="pre">/mnt</span></code> 目录；</p></li>
+<li><p>通过 <code class="docutils literal notranslate"><span class="pre">ls</span></code> 可以发现 <code class="docutils literal notranslate"><span class="pre">/mnt</span></code> 目录下的内容和 <code class="docutils literal notranslate"><span class="pre">rCore-Tutorial-v3</span></code> 目录下的内容完全相同，接下来就可以在这个环境下运行 tutorial 了。例如 <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">os</span> <span class="pre">&amp;&amp;</span> <span class="pre">make</span> <span class="pre">run</span></code> 。</p></li>
+</ol>
+</div><div aria-labelledby="tab-0-Qw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-Qw==" name="Qw==" role="tabpanel" tabindex="0"><ul class="simple">
+<li><p>拉取我们的Docker镜像文件：</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull nzpznk/oslab-c-env
+docker pull registry.cn-hangzhou.aliyuncs.com/nzpznk/oslab-c-env
+</pre></div>
+</div>
+<ul>
+<li><p>查看下载的镜像文件：docker image ls (nzpznk/oslab-c-env or registry.cn-hangzhou.aliyuncs.com/nzpznk/oslab-c-env)</p></li>
+<li><p>使用下载的镜像文件创建一个名字叫container_name(可自己指定)的容器，并获得容器的bash shell: docker run -it –name container_name image_name /bin/bash</p></li>
+<li><p>一些常用的指令：</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 检查运行中的容器</span>
+docker ps
+<span class="c1"># 检查所有容器（包括停止了的）</span>
+docker ps -a
+<span class="c1"># 停止 / 启动容器</span>
+docker stop/start container_name
+<span class="c1"># 获取一个运行中的docker容器的bash shell:</span>
+docker <span class="nb">exec</span> -it container_name /bin/bash
+<span class="c1"># 删除一个已经停止的容器:</span>
+docker rm container_name
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>之后就是把我们宿主机的文件挂载在docker容器上.在使用 docker run 启动容器时，你可以将目录挂载到容器上，这样就可以从docker容器访问到本地主机的某个文件夹.</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -it --name container_name --mount <span class="nv">type</span><span class="o">=</span>bind,src<span class="o">=[</span>absolute path of folder <span class="k">in</span> host machine<span class="o">]</span>,dst<span class="o">=[</span>absolute path <span class="k">in</span> container<span class="o">]</span> image_name /bin/bas
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></div>
+</div>
+<p>使用 macOS 进行实验理论上也是可行的，但本章节仅介绍 Ubuntu 下的环境配置方案。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>经初步测试，使用 M1 芯片的 macOS 也可以运行本实验的框架，即我们的实验对平台的要求不是很高。但我们仍建议同学配置 Ubuntu 环境，以避免未知的环境问题。</p>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>开发环境配置<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-UnVzdA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-UnVzdA==" name="UnVzdA==" role="tab" tabindex="0">Rust</button><button aria-controls="panel-1-Qw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-Qw==" name="Qw==" role="tab" tabindex="-1">C</button></div><div aria-labelledby="tab-1-UnVzdA==" class="sphinx-tabs-panel group-tab" id="panel-1-UnVzdA==" name="UnVzdA==" role="tabpanel" tabindex="0"><p>首先安装 Rust 版本管理器 rustup 和 Rust 包管理器 cargo，可以使用官方安装脚本：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl --proto <span class="s1">'=https'</span> --tlsv1.2 -sSf https://sh.rustup.rs <span class="p">|</span> sh
+</pre></div>
+</div>
+<p>如果因网络问题通过命令行下载脚本失败了，可以在浏览器地址栏中输入 <a class="reference external" href="https://sh.rustup.rs">https://sh.rustup.rs</a> 将脚本下载到本地运行。</p>
+<p>或者使用字节跳动提供的镜像源：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl --proto <span class="s1">'=https'</span> --tlsv1.2 -sSf https://rsproxy.cn/rustup-init.sh <span class="p">|</span> sh
+</pre></div>
+</div>
+<p>使用官方安装脚本时一些可能的加速安装的方式：</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-UnNQcm94eSDmupA=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-2-UnNQcm94eSDmupA=" name="UnNQcm94eSDmupA=" role="tab" tabindex="0">RsProxy 源</button><button aria-controls="panel-2-dHVuYSDmupA=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-dHVuYSDmupA=" name="dHVuYSDmupA=" role="tab" tabindex="-1">tuna 源</button><button aria-controls="panel-2-dXN0YyDmupA=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-dXN0YyDmupA=" name="dXN0YyDmupA=" role="tab" tabindex="-1">ustc 源</button><button aria-controls="panel-2-5Luj55CG" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-2-5Luj55CG" name="5Luj55CG" role="tab" tabindex="-1">代理</button></div><div aria-labelledby="tab-2-UnNQcm94eSDmupA=" class="sphinx-tabs-panel group-tab" id="panel-2-UnNQcm94eSDmupA=" name="UnNQcm94eSDmupA=" role="tabpanel" tabindex="0"><p>建议直接用字节跳动提供的安装脚本</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">RUSTUP_DIST_SERVER</span><span class="o">=</span><span class="s2">"https://rsproxy.cn"</span>
+<span class="nb">export</span> <span class="nv">RUSTUP_UPDATE_ROOT</span><span class="o">=</span><span class="s2">"https://rsproxy.cn/rustup"</span>
+curl --proto <span class="s1">'=https'</span> --tlsv1.2 -sSf https://sh.rustup.rs <span class="p">|</span> sh
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-dHVuYSDmupA=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-dHVuYSDmupA=" name="dHVuYSDmupA=" role="tabpanel" tabindex="0"><p>使用校园网同学可考虑此方案</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">RUSTUP_DIST_SERVER</span><span class="o">=</span>https://mirrors.tuna.edu.cn/rustup
+<span class="nb">export</span> <span class="nv">RUSTUP_UPDATE_ROOT</span><span class="o">=</span>https://mirrors.tuna.edu.cn/rustup/rustup
+curl --proto <span class="s1">'=https'</span> --tlsv1.2 -sSf https://sh.rustup.rs <span class="p">|</span> sh
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-dXN0YyDmupA=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-dXN0YyDmupA=" name="dXN0YyDmupA=" role="tabpanel" tabindex="0"><p>似乎现在体验最好的不再是 ustc 源了……</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">RUSTUP_DIST_SERVER</span><span class="o">=</span>https://mirrors.ustc.edu.cn/rust-static
+<span class="nb">export</span> <span class="nv">RUSTUP_UPDATE_ROOT</span><span class="o">=</span>https://mirrors.ustc.edu.cn/rust-static/rustup
+curl --proto <span class="s1">'=https'</span> --tlsv1.2 -sSf https://sh.rustup.rs <span class="p">|</span> sh
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-5Luj55CG" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-2-5Luj55CG" name="5Luj55CG" role="tabpanel" tabindex="0"><p>如果你打开这一栏，可能也不需要参考下面这几行了</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 请根据自身配置灵活调整下面的链接</span>
+<span class="nb">export</span> <span class="nv">https_proxy</span><span class="o">=</span>http://127.0.0.1:1080
+<span class="nb">export</span> <span class="nv">http_proxy</span><span class="o">=</span>http://127.0.0.1:1080
+<span class="nb">export</span> <span class="nv">ftp_proxy</span><span class="o">=</span>http://127.0.0.1:1080
+</pre></div>
+</div>
+</div></div>
+<p>安装中全程选择默认选项即可。</p>
+<p>安装完成后，我们可以重新打开一个终端来让新设置的环境变量生效，可以手动将环境变量设置应用到当前终端，
+只需输入以下命令：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> <span class="nv">$HOME</span>/.cargo/env
+</pre></div>
+</div>
+<p>确认一下我们正确安装了 Rust 工具链：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 这里以 nightly 为例，默认安装的应是 stable 版本</span>
+&gt; rustc --version
+rustc <span class="m">1</span>.57.0-nightly <span class="o">(</span>97032a6df <span class="m">2021</span>-09-08<span class="o">)</span>
+</pre></div>
+</div>
+<p>最好把 Rust 包管理器 cargo 镜像地址 crates.io 也替换，来加速三方库的下载。
+打开或新建 <code class="docutils literal notranslate"><span class="pre">~/.cargo/config</span></code> 文件，并修改内容：</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-3-UnNQcm94eSDmupA=" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-3-UnNQcm94eSDmupA=" name="UnNQcm94eSDmupA=" role="tab" tabindex="0">RsProxy 源</button><button aria-controls="panel-3-dHVuYSDmupA=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-dHVuYSDmupA=" name="dHVuYSDmupA=" role="tab" tabindex="-1">tuna 源</button><button aria-controls="panel-3-dXN0YyDmupA=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-3-dXN0YyDmupA=" name="dXN0YyDmupA=" role="tab" tabindex="-1">ustc 源</button></div><div aria-labelledby="tab-3-UnNQcm94eSDmupA=" class="sphinx-tabs-panel group-tab" id="panel-3-UnNQcm94eSDmupA=" name="UnNQcm94eSDmupA=" role="tabpanel" tabindex="0"><p>目前字节跳动提供的镜像体验真的很不错</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[source.crates-io]</span>
+<span class="n">replace-with</span> <span class="o">=</span> <span class="s">'rsproxy'</span>
+
+<span class="k">[source.rsproxy]</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="s">"https://rsproxy.cn/crates.io-index"</span>
+
+<span class="c1"># Optional</span>
+<span class="k">[registries.rsproxy]</span>
+<span class="n">index</span> <span class="o">=</span> <span class="s">"https://rsproxy.cn/crates.io-index"</span>
+
+<span class="k">[net]</span>
+<span class="n">git-fetch-with-cli</span> <span class="o">=</span> <span class="kc">true</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-3-dHVuYSDmupA=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-dHVuYSDmupA=" name="dHVuYSDmupA=" role="tabpanel" tabindex="0"><p>相比之下，tuna 源在校园网外的体验就不是那么好</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[source.crates-io]</span>
+<span class="n">replace-with</span> <span class="o">=</span> <span class="s">'tuna'</span>
+
+<span class="k">[source.tuna]</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="s">"https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-3-dXN0YyDmupA=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-3-dXN0YyDmupA=" name="dXN0YyDmupA=" role="tabpanel" tabindex="0"><p>ustc 源仍是一个好选择</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="k">[source.crates-io]</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="s">"https://github.com/rust-lang/crates.io-index"</span>
+<span class="n">replace-with</span> <span class="o">=</span> <span class="s">'ustc'</span>
+<span class="k">[source.ustc]</span>
+<span class="n">registry</span> <span class="o">=</span> <span class="s">"git://mirrors.ustc.edu.cn/crates.io-index"</span>
+</pre></div>
+</div>
+</div></div>
+<p>推荐 JetBrains Clion + Rust 插件或者 Visual Studio Code 搭配 rust-analyzer 和 RISC-V Support 插件进行代码阅读和开发。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<ul class="simple">
+<li><p>JetBrains Clion 是付费商业软件，但对于学生和教师，只要在 JetBrains 网站注册账号，可以享受一定期限（半年左右）的免费使用的福利。</p></li>
+<li><p>Visual Studio Code 是开源软件。</p></li>
+<li><p>当然，采用 VIM，Emacs 等传统的编辑器也是没有问题的。</p></li>
+</ul>
+</div>
+</div><div aria-labelledby="tab-1-Qw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-Qw==" name="Qw==" role="tabpanel" tabindex="0"><p>首先，我们需要 RISC-V 配套的 gcc。你可以使用包管理工具：</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-4-VWJ1bnR1" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-4-VWJ1bnR1" name="VWJ1bnR1" role="tab" tabindex="0">Ubuntu</button><button aria-controls="panel-4-bWFjT1M=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-4-bWFjT1M=" name="bWFjT1M=" role="tab" tabindex="-1">macOS</button><button aria-controls="panel-4-V2luZG93cw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-4-V2luZG93cw==" name="V2luZG93cw==" role="tab" tabindex="-1">Windows</button></div><div aria-labelledby="tab-4-VWJ1bnR1" class="sphinx-tabs-panel group-tab" id="panel-4-VWJ1bnR1" name="VWJ1bnR1" role="tabpanel" tabindex="0"><p>apt 真的非常好用</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install gcc-riscv64-unknown-elf
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>在 18.04 中，apt 安装的版本是 7.4.0，可能会有版本过低的问题；</p>
+<p>在 20.04 中，apt 安装的版本是 9.3.0，应该不会有问题；</p>
+<p>在更新的 20.10 和 21.04 中，apt 安装的版本为 10 以上，应该不会有问题。</p>
+</div>
+</div><div aria-labelledby="tab-4-bWFjT1M=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-bWFjT1M=" name="bWFjT1M=" role="tabpanel" tabindex="0"><p>用 macOS 还是建议安个 homebrew 呢</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew install riscv-gnu-toolchain
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>相比 apt，homebrew 安装的版本已经新到 11.1.0 了</p>
+</div>
+</div><div aria-labelledby="tab-4-V2luZG93cw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-V2luZG93cw==" name="V2luZG93cw==" role="tabpanel" tabindex="0"><p>你在干什么！快去换个类 Unix 系统！</p>
+</div></div>
+<p>也可以选择一个常用的位置，放置 gcc 的可执行二进制文件。位置可以自己指定，以下仅作为参考 (并以 Ubuntu 为例)。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /usr/local
+<span class="c1"># 下载预编译的 RISC-V 工具链</span>
+sudo wget https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
+<span class="c1"># 解压缩</span>
+tar xzvf riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz
+<span class="c1"># 重命名文件夹</span>
+mv riscv64-unknown-elf-gcc-10.2.0-2020.12.8-x86_64-linux-ubuntu14 riscv64-unknown-elf-gcc
+</pre></div>
+</div>
+<p>这就算“安装”完成了。不过我们还要把 gcc 的二进制文件路径添加到环境变量 PATH 中，以在任意目录直接运行。将以下指令添加到 home 下的 <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> 中既可以一劳永逸的解决 (如果你使用的是其他路径，请替换 <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> 为你设置的路径；如果你使用 zsh 或其他 shell，请修改为 <code class="docutils literal notranslate"><span class="pre">.zshrc</span></code> 或对应文件)：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">"/usr/local/riscv64-unknown-elf-gcc/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</pre></div>
+</div>
+<p>接下来，安装用于交叉编译到 musl-gcc，类似上方的步骤：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /usr/local
+sudo wget https://musl.cc/riscv64-linux-musl-cross.tgz
+tar xzvf riscv64-linux-musl-cross.tgz
+<span class="nb">echo</span> <span class="s1">'export PATH="/usr/local/riscv64-linux-musl-cross/bin:$PATH"'</span> &gt;&gt; ~/.bashrc
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>事实上，在我们的实验中，musl-gcc 可以被 riscv64-unknown-elf-gcc 替代。但目前用户态的测例程序仍在使用 musl-gcc 编译，预计会在不远的将来进行替换。</p>
+</div>
+<p>此外，我们的项目使用 cmake 构建，也需要安装：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install cmake
+</pre></div>
+</div>
+</div></div>
+</div>
+<div class="section" id="qemu">
+<h2>Qemu 模拟器安装<a class="headerlink" href="#qemu" title="永久链接至标题">¶</a></h2>
+<p>我们需要使用 Qemu 进行实验。你可以直接使用包管理工具进行安装：</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-5-VWJ1bnR1" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-5-VWJ1bnR1" name="VWJ1bnR1" role="tab" tabindex="0">Ubuntu</button><button aria-controls="panel-5-bWFjT1M=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-bWFjT1M=" name="bWFjT1M=" role="tab" tabindex="-1">macOS</button><button aria-controls="panel-5-V2luZG93cw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-5-V2luZG93cw==" name="V2luZG93cw==" role="tab" tabindex="-1">Windows</button></div><div aria-labelledby="tab-5-VWJ1bnR1" class="sphinx-tabs-panel group-tab" id="panel-5-VWJ1bnR1" name="VWJ1bnR1" role="tabpanel" tabindex="0"><p>apt 真的非常好用</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install qemu
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>在 18.04 和 20.04 中，apt 安装的版本都过老，无法使用，请参考下面的手动编译部分；</p>
+<p>在 20.10 和 21.04 中，apt 安装的版本为 5+，应该可以使用。但系统我们并未做过测试。</p>
+</div>
+</div><div aria-labelledby="tab-5-bWFjT1M=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-bWFjT1M=" name="bWFjT1M=" role="tabpanel" tabindex="0"><p>用 macOS 还是建议安个 homebrew 呢</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew install qemu
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>相比 apt，homebrew 安装的版本已经新到 6.1.0 了</p>
+<p>在 macOS 上 QEMU 不支持用户态模拟，即不存在 <code class="docutils literal notranslate"><span class="pre">qemu-riscv64</span></code>。这对实验没有影响，只是第一章的某些示例可能无法执行。</p>
+</div>
+</div><div aria-labelledby="tab-5-V2luZG93cw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-5-V2luZG93cw==" name="V2luZG93cw==" role="tabpanel" tabindex="0"><p>你在干什么！快去换个类 Unix 系统！</p>
+</div></div>
+<p>下面讲解手动编译安装 Qemu。</p>
+<p>本实验主要在 QEMU 5 上进行开发，而很多 Linux 发行版的软件包管理器默认软件源中的版本过低 (你也在上面包管理安装方法的注解中看到了)，像 macOS 的又较新 (可能存在我们尚不知道的兼容性问题)，因此从源码手动编译安装是非常靠谱的方法。</p>
+<p>首先我们安装依赖包，获取 QEMU 的源代码并手动编译 (以下以 Ubuntu 系统为例，如果你使用 macOS 或其他 Linux 发行版，请参考 <a class="reference external" href="https://wiki.qemu.org/Hosts/Linux">Linux 上使用 QEMU</a> 或 <a class="reference external" href="https://wiki.qemu.org/Hosts/Mac">macOS 上使用 QEMU</a>)：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 有可能你使用的 Ubuntu 缺少基本的工具，如 make conf，可以先执行这一条。不过可以先尝试执行后面的，有问题再回到这一条：</span>
+sudo apt install autoconf automake autotools-dev build-essential bison flex tmux python3 curl wget
+
+<span class="c1"># 安装编译所需的依赖</span>
+sudo apt install git libglib2.0-dev libfdt-dev libpixman-1-dev zlib1g-dev libnfs-dev libiscsi-dev
+
+<span class="c1"># 下载源码</span>
+<span class="c1"># 应该也可以换为 5.1.0 5.2.0 版本</span>
+wget https://download.qemu.org/qemu-5.0.0.tar.xz
+
+<span class="c1"># 解压</span>
+tar xvJf qemu-5.0.0.tar.xz
+
+<span class="c1"># 编译并安装 RISC-V 支持</span>
+<span class="nb">cd</span> qemu-5.0.0
+./configure --target-list<span class="o">=</span>riscv64-softmmu,riscv64-linux-user
+make -j
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>注意，上面的依赖包可能并不完全，比如在 Ubuntu 18.04 上：</p>
+<ul class="simple">
+<li><p>出现 <code class="docutils literal notranslate"><span class="pre">ERROR:</span> <span class="pre">pkg-config</span> <span class="pre">binary</span> <span class="pre">'pkg-config'</span> <span class="pre">not</span> <span class="pre">found</span></code> 时，可以安装 <code class="docutils literal notranslate"><span class="pre">pkg-config</span></code> 包；</p></li>
+<li><p>出现 <code class="docutils literal notranslate"><span class="pre">ERROR:</span> <span class="pre">glib-2.48</span> <span class="pre">gthread-2.0</span> <span class="pre">is</span> <span class="pre">required</span> <span class="pre">to</span> <span class="pre">compile</span> <span class="pre">QEMU</span></code> 时，可以安装
+<code class="docutils literal notranslate"><span class="pre">libglib2.0-dev</span></code> 包；</p></li>
+<li><p>出现 <code class="docutils literal notranslate"><span class="pre">ERROR:</span> <span class="pre">pixman</span> <span class="pre">&gt;=</span> <span class="pre">0.21.8</span> <span class="pre">not</span> <span class="pre">present</span></code> 时，可以安装 <code class="docutils literal notranslate"><span class="pre">libpixman-1-dev</span></code> 包。</p></li>
+</ul>
+<p>如果你想获得尽可能多的 QEMU 特性，可以安装这些包 (应该没有必要)：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># all recommended additional packages for maximum code coverage can be installed like this</span>
+sudo apt install git-email
+sudo apt install libaio-dev libbluetooth-dev libbrlapi-dev libbz2-dev
+sudo apt install libcap-dev libcap-ng-dev libcurl4-gnutls-dev libgtk-3-dev
+sudo apt install libibverbs-dev libjpeg8-dev libncurses5-dev libnuma-dev
+sudo apt install librbd-dev librdmacm-dev
+sudo apt install libsasl2-dev libsdl1.2-dev libseccomp-dev libsnappy-dev libssh2-1-dev
+sudo apt install libvde-dev libvdeplug-dev libvte-2.90-dev libxen-dev liblzo2-dev
+sudo apt install valgrind xfslibs-dev
+</pre></div>
+</div>
+</div>
+<p>之后我们可以在同目录下 <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">make</span> <span class="pre">install</span></code> 将 QEMU 安装到 <code class="docutils literal notranslate"><span class="pre">/usr/local/bin</span></code> 目录下，但这样会引起冲突 (如和包管理工具安装的版本冲突)。可以考虑编辑 <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> (或你使用的 shell 的配置文件)，将编译好的 QEMU 添加到环境变量 PATH 中 (请根据你下载编译 QEMU 的位置更改下面几行的路径)：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">"/path/to/qemu-5.0.0:</span><span class="nv">$PATH</span><span class="s2">"</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">"/path/to/qemu-5.0.0/riscv64-softmmu:</span><span class="nv">$PATH</span><span class="s2">"</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="s2">"/path/to/qemu-5.0.0/riscv64-linux-user:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>事实上，当你编译完成后，应该可以把可执行文件 <code class="docutils literal notranslate"><span class="pre">qemu-system-riscv64</span></code> 和 <code class="docutils literal notranslate"><span class="pre">qemu-riscv64</span></code> 从文件夹中复制出来，只添加这两个文件到环境变量中。其余文件可以删除以腾出空间。</p>
+</div>
+<p>随后即可在终端中 <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/.bashrc</span></code> 更新环境变量 PATH，或者重启一个新的终端。此时便可以确定 QEMU 的版本</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>qemu-system-riscv64 --version
+qemu-riscv64 --version
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>试运行框架代码<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-6-UnVzdA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-6-UnVzdA==" name="UnVzdA==" role="tab" tabindex="0">Rust</button><button aria-controls="panel-6-Qw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-6-Qw==" name="Qw==" role="tab" tabindex="-1">C</button></div><div aria-labelledby="tab-6-UnVzdA==" class="sphinx-tabs-panel group-tab" id="panel-6-UnVzdA==" name="UnVzdA==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/LearningOS/rCore-Tutorial-2021Autumn
+</pre></div>
+</div>
+<p>只需在 <code class="docutils literal notranslate"><span class="pre">os</span></code> 目录下 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code> 即可。在内核加载完毕之后，可以看到目前可用的应用程序。 <code class="docutils literal notranslate"><span class="pre">usertests</span></code> 打包了其中的很大一部分，我们可以运行它，只需输入在终端中输入它的名字即可。</p>
+<p>之后，可以先按下 <code class="docutils literal notranslate"><span class="pre">Ctrl+A</span></code> ，再按下 <code class="docutils literal notranslate"><span class="pre">X</span></code> 来退出 Qemu。</p>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>请务必执行 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span></code>，这将为你安装一些上文没有提及的 Rust 包依赖。</p>
+<p>如果卡在了</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Updating git repository `https://github.com/rcore-os/riscv`
+</pre></div>
+</div>
+<p>请通过更换 hosts 等方式解决科学上网问题，或者将 riscv 项目下载到本地，并修改 os/Cargo.toml 中的 riscv 包依赖路径</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">dependencies</span><span class="p">]</span>
+<span class="n">riscv</span> <span class="o">=</span> <span class="p">{</span> <span class="n">path</span> <span class="o">=</span> <span class="s2">"YOUR riscv PATH"</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"inline-asm"</span><span class="p">]</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div><div aria-labelledby="tab-6-Qw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-6-Qw==" name="Qw==" role="tabpanel" tabindex="0"><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/DeathWish5/uCore-Tutorial-v2.git --recursive
+<span class="nb">cd</span> uCore-Tutorial-v2
+</pre></div>
+</div>
+<p>其他的章节需要处理用户代码，我们可以先运行 ch1 分支：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt; git checkout ch1
+&gt; make run LOG=debug
+
+[rustsbi] RustSBI version 0.1.1
+.______       __    __      _______.___________.  _______..______   __
+|   _  \     |  |  |  |    /       |           | /       ||   _  \ |  |
+|  |_)  |    |  |  |  |   |   (----`---|  |----`|   (----`|  |_)  ||  |
+|      /     |  |  |  |    \   \       |  |      \   \    |   _  &lt; |  |
+|  |\  \----.|  `--'  |.----)   |      |  |  .----)   |   |  |_)  ||  |
+| _| `._____| \______/ |_______/       |__|  |_______/    |______/ |__|
+
+[rustsbi] Platform: QEMU (Version 0.1.0)
+[rustsbi] misa: RV64ACDFIMSU
+[rustsbi] mideleg: 0x222
+[rustsbi] medeleg: 0xb1ab
+[rustsbi-dtb] Hart count: cluster0 with 1 cores
+[rustsbi] Kernel entry: 0x80200000
+
+hello wrold!
+[ERROR 0]stext: 0x0000000080200000
+[WARN 0]etext: 0x0000000080201000
+[INFO 0]sroda: 0x0000000080201000
+[DEBUG 0]eroda: 0x0000000080202000
+[DEBUG 0]sdata: 0x0000000080202000
+[INFO 0]edata: 0x0000000080202000
+[WARN 0]sbss : 0x0000000080212000
+[ERROR 0]ebss : 0x0000000080212000
+[PANIC 0] os/main.c:39: ALL DONE
+</pre></div>
+</div>
+<p>忽略掉编译输出后，你应该得到如上的输出，这表示 uCore 已经成功运行。</p>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p><strong>退出 qemu 的方法</strong></p>
+<p>如果是正常推出，uCore 会自动关闭 qemu，但如果 os 跑飞了，我们不能通过 <code class="docutils literal notranslate"><span class="pre">Ctrl</span> <span class="pre">+</span> <span class="pre">C</span></code> 来推出。此时可以先按下 <code class="docutils literal notranslate"><span class="pre">Ctrl+A</span></code> ，再按下 <code class="docutils literal notranslate"><span class="pre">X</span></code> 来退出 Qemu。</p>
+</div>
+</div></div>
+<p>恭喜你完成了实验环境的配置，可以开始阅读教程的正文部分了！</p>
+</div>
+<div class="section" id="gdb">
+<h2>GDB 调试支持*<a class="headerlink" href="#gdb" title="永久链接至标题">¶</a></h2>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>使用 GDB debug 并不是必须的，你可以暂时跳过本小节。</p>
+<p>如果你是使用 C 进行本实验，在完成相关环境配置后，你已经配置好了 gdb，不需要再看本小节。</p>
+</div>
+<p>在 <code class="docutils literal notranslate"><span class="pre">os</span></code> 目录下 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">debug</span></code> 可以调试我们的内核，这需要安装终端复用工具 <code class="docutils literal notranslate"><span class="pre">tmux</span></code> ，还需要基于 riscv64 平台的 gdb 调试器 <code class="docutils literal notranslate"><span class="pre">riscv64-unknown-elf-gdb</span></code> 。该调试器包含在 riscv64 gcc 工具链中，工具链的预编译版本可以在如下链接处下载：</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14.tar.gz">Ubuntu 平台</a></p></li>
+<li><p><a class="reference external" href="https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-apple-darwin.tar.gz">macOS 平台</a></p></li>
+<li><p><a class="reference external" href="https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-w64-mingw32.tar.gz">Windows 平台</a></p></li>
+<li><p><a class="reference external" href="https://static.dev.sifive.com/dev-tools/freedom-tools/v2020.12/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-centos6.zip">CentOS 平台</a></p></li>
+</ul>
+<p>解压后在 <code class="docutils literal notranslate"><span class="pre">bin</span></code> 目录下即可找到 <code class="docutils literal notranslate"><span class="pre">riscv64-unknown-elf-gdb</span></code> 以及另外一些常用工具 <code class="docutils literal notranslate"><span class="pre">objcopy/objdump/readelf</span></code> 等。</p>
+<p>当然，你也可以使用非常方便的包管理工具！</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-7-VWJ1bnR1" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-7-VWJ1bnR1" name="VWJ1bnR1" role="tab" tabindex="0">Ubuntu</button><button aria-controls="panel-7-bWFjT1M=" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-7-bWFjT1M=" name="bWFjT1M=" role="tab" tabindex="-1">macOS</button><button aria-controls="panel-7-V2luZG93cw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-7-V2luZG93cw==" name="V2luZG93cw==" role="tab" tabindex="-1">Windows</button></div><div aria-labelledby="tab-7-VWJ1bnR1" class="sphinx-tabs-panel group-tab" id="panel-7-VWJ1bnR1" name="VWJ1bnR1" role="tabpanel" tabindex="0"><p>apt 真的非常好用</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt install gcc-riscv64-unknown-elf
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>在 18.04 中，apt 安装的版本是 7.4.0，可能会有版本过低的问题；</p>
+<p>在 20.04 中，apt 安装的版本是 9.3.0，应该不会有问题；</p>
+<p>在更新的 20.10 和 21.04 中，apt 安装的版本为 10 以上，应该不会有问题。</p>
+</div>
+</div><div aria-labelledby="tab-7-bWFjT1M=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-7-bWFjT1M=" name="bWFjT1M=" role="tabpanel" tabindex="0"><p>用 macOS 还是建议安个 homebrew 呢</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew install riscv-gnu-toolchain
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p>相比 apt，homebrew 安装的版本已经新到 11.1.0 了</p>
+</div>
+</div><div aria-labelledby="tab-7-V2luZG93cw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-7-V2luZG93cw==" name="V2luZG93cw==" role="tabpanel" tabindex="0"><p>你在干什么！快去换个类 Unix 系统！</p>
+</div></div>
+</div>
+</div>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="setup-sphinx.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">修改和构建本项目</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+
+        <div class="related-information">
+              Copyright &#169; THU OS 2021 Autumn |
+            Built with <a href="https://www.sphinx-doc.org/">Sphinx</a>
+              and
+              <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+              <a href="https://github.com/pradyunsg/furo">Furo theme</a>. |
+            <a class="muted-link" href="_sources/0setup-devel-env.rst.txt"
+               rel="nofollow">
+              显示源代码
+            </a>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            目录
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">第零章：实验环境配置</a><ul>
+<li><a class="reference internal" href="#os">OS 环境配置</a></li>
+<li><a class="reference internal" href="#id2">开发环境配置</a></li>
+<li><a class="reference internal" href="#qemu">Qemu 模拟器安装</a></li>
+<li><a class="reference internal" href="#id3">试运行框架代码</a></li>
+<li><a class="reference internal" href="#gdb">GDB 调试支持*</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/scripts/main.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "duskmoon314/os-tutorial-book");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "comments");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script src="_static/tabs.js"></script>
+    <script src="_static/translations.js"></script>
+    </body>
+</html>
