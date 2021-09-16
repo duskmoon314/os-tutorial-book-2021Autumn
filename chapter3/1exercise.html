@@ -135,7 +135,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -221,7 +221,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -229,6 +229,177 @@
         <article role="main">
           <div class="section" id="chapter3">
 <h1>chapter3 练习<a class="headerlink" href="#chapter3" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><p>本节难度：<strong>编程试水</strong></p></li>
+</ul>
+<div class="section" id="id1">
+<h2>本章任务<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>注意本节任务最终对应一次 lab 提交。</p></li>
+<li><p>老规矩，先执行框架代码看下啥情况。</p></li>
+<li><p>理解框架的多任务加载机制，了解此时用户和内核的大概内存布局。在此基础上，实现本章编程作业 <em>(1) 更安全的 sys_write</em>。</p></li>
+<li><p>理解框架的调度机制，尤其要搞明白时钟中断的处理机制以及 yield 之后下一个进程的选择。在次基础上，完成本节的编程作业 <em>(2) stride 调度算法</em>。</p></li>
+<li><p>进一步思考 stride 调度算法，完成本章问答作业。</p></li>
+<li><p>最终，完成实验报告并 push 你的 ch3 分支到远程仓库。<a class="reference internal" href="#id5"><span class="std std-ref">报告要求</span></a> 。push 代码后会自动执行 CI，代码给分以 CI 给分为准。</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>编程作业<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="sys-write">
+<h3>sys_write 参数检查<a class="headerlink" href="#sys-write" title="永久链接至标题">¶</a></h3>
+<p>ch2 中，我们实现了第一个系统调用 <code class="docutils literal notranslate"><span class="pre">sys_write</span></code>，这使得我们可以在用户态输出信息。但是 os 在提供服务的同时，还有保护 os 本身以及其他用户程序不受错误或者恶意程序破坏的功能。</p>
+<p>由于还没有实现虚拟内存，我们可以在用户程序中指定一个属于其他程序或者内核的地址，并将它以字符串的形式输出，这显然是不合理的，因此我们要对 sys_write 做检查：</p>
+<ul class="simple">
+<li><p>sys_write 仅能输出位于程序本身内存空间的数据，否则报错。</p></li>
+</ul>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<ul class="simple">
+<li><p>传入缓冲区是否位于用户所属地址。也就是 <code class="docutils literal notranslate"><span class="pre">[buf,</span> <span class="pre">buf</span> <span class="pre">+</span> <span class="pre">len)</span></code> 这一段地址，是否完全属于对应用户。如果不完全属于，sys_write应该返回 -1。</p></li>
+<li><p>想想一个应用程序拥有哪些属于自己的空间？如何获得这些空间的位置？</p></li>
+<li><p>大胆修改已有框架！除了配置文件，你几乎可以随意修改已有框架的内容。</p></li>
+<li><p>可以看看 write 相关的测例是如何测试的。</p></li>
+</ul>
+</div>
+<p>实现正确后，代码应该能够通过用户测例中带有 write 的几个测例。</p>
+</div>
+<div class="section" id="stride">
+<h3>stride 调度算法<a class="headerlink" href="#stride" title="永久链接至标题">¶</a></h3>
+<p>ch3 中我们引入了任务调度的概念，可以在不同任务之间切换，目前我们实现的调度算法十分简单，存在一些问题且不存在优先级。现在我们要为我们的 os 实现一种带优先级的调度算法：stide 调度算法。</p>
+<p>算法描述如下:</p>
+<ol class="arabic simple">
+<li><p>为每个进程设置一个当前 stride，表示该进程当前已经运行的“长度”。另外设置其对应的 pass 值（只与进程的优先权有关系），表示对应进程在调度后，stride 需要进行的累加值。</p></li>
+<li><p>每次需要调度时，从当前 runnable 态的进程中选择 stride 最小的进程调度。对于获得调度的进程 P，将对应的 stride 加上其对应的步长 pass。</p></li>
+<li><p>一个时间片后，回到上一步骤，重新调度当前 stride 最小的进程。</p></li>
+</ol>
+<p>可以证明，如果令 P.pass = BigStride / P.priority 其中 P.pass 为进程的 pass 值，P.priority 表示进程的优先权（大于 1），而 BigStride 表示一个预先定义的大常数，则该调度方案为每个进程分配的时间将与其优先级成正比。证明过程我们在这里略去，有兴趣的同学可以在网上查找相关资料。</p>
+<p>其他实验细节：</p>
+<ul class="simple">
+<li><p>stride 调度要求进程优先级 <span class="math notranslate nohighlight">\(\geq 2\)</span>，所以设定进程优先级 <span class="math notranslate nohighlight">\(\leq 1\)</span> 会导致错误。</p></li>
+<li><p>进程初始 stride 设置为 0 即可。</p></li>
+<li><p>进程初始优先级设置为 16。</p></li>
+</ul>
+<p>实验首先要求新增 syscall <code class="docutils literal notranslate"><span class="pre">sys_set_priority</span></code>:</p>
+<ul class="simple">
+<li><p>功能描述：设定进程优先级
+* syscall ID: 140
+* 功能：设定进程优先级。
+* C 接口：<code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">setpriority(long</span> <span class="pre">long</span> <span class="pre">prio);</span></code>
+* Rust 接口：<code class="docutils literal notranslate"><span class="pre">fn</span> <span class="pre">sys_set_priority(prio:</span> <span class="pre">isize)</span> <span class="pre">-&gt;</span> <span class="pre">isize;</span></code>
+* 说明：设定自身进程优先级，只要 prio 在 [2, isize_max] 就成功，返回 prio，否则返回 -1。</p></li>
+<li><p>针对测例
+* <code class="docutils literal notranslate"><span class="pre">setprio</span></code></p></li>
+</ul>
+<p>实现 sys_set_priority 之后，你应该可以通过相应测例。</p>
+<p>完成之后你需要调整框架的代码调度机制，以支持设置不同进程优先级之后可以按照 stride 算法进行调度。实现正确后，代码应该能够通过用户测例 stride*。如果实现正确，stride[x] 最终输出的 priority 和 exitcode 应该大致成正比。由于我们的时间片比较粗糙，qemu 的模拟也不是十分准确，我们最终的 CI 测试会允许最大 30% 的误差。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<ul class="simple">
+<li><p>你应该给 proc / Task 结构体加入新的字段来支持优先级。</p></li>
+<li><p>我们的测例运行时间不很长，不要求处理 stride 的溢出（详见问答作业，当然处理了更好）。</p></li>
+<li><p>为了减少整数除的误差，BIG_STRIDE 一般需要很大，但测例中的优先级都是 2 的整数次幂，结合第二点，BIG_STRIDE不需要太大，65536 是一个不错的数字。</p></li>
+<li><p>用户态的 printf 支持了行缓冲，所以如果你想要增加用户程序的输出，记得换行。</p></li>
+<li><p>stride 算法要找到　stride 最小的进程，使用优先级队列是效率不错的办法，但是我们的实验测例很简单，所以效率完全不是问题。事实上，我们非常推荐使用暴力扫一遍这种简单易行的办法找最小值。</p></li>
+<li><p>注意设置进程的初始优先级。</p></li>
+</ul>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">注意</p>
+<p>这部分仅使用 Rust 进行实验的同学需要注意</p>
+<p>为了让大家能在本编程作业中使用 <code class="docutils literal notranslate"><span class="pre">Vec</span></code> 等数据结构，我们利用第三方库 <code class="docutils literal notranslate"><span class="pre">buddy_system_allocator</span></code> 为大家实现了堆内存分配器，相关代码位于 <code class="docutils literal notranslate"><span class="pre">heap_alloc</span></code> 模块。</p>
+<p>背景知识： <a class="reference external" href="https://rcore-os.github.io/rCore-Tutorial-Book-v3/chapter4/1rust-dynamic-allocation.html">Rust 中的动态内存分配</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="ch3">
+<span id="id3"></span><h2>问答作业<a class="headerlink" href="#ch3" title="永久链接至标题">¶</a></h2>
+<ol class="arabic simple">
+<li><p>stride 算法深入</p></li>
+</ol>
+<p>stride 算法原理非常简单，但是有一个比较大的问题。例如两个 pass = 10 的进程，使用 8bit 无符号整形储存 stride， p1.stride = 255, p2.stride = 250，在 p2 执行一个时间片后，理论上下一次应该 p1 执行。</p>
+<ul class="simple">
+<li><p>实际情况是轮到 p1 执行吗？为什么？</p></li>
+</ul>
+<p>我们之前要求进程优先级 &gt;= 2 其实就是为了解决这个问题。可以证明，<strong>在不考虑溢出的情况下</strong>, 在进程优先级全部 &gt;= 2 的情况下，如果严格按照算法执行，那么 STRIDE_MAX – STRIDE_MIN &lt;= BigStride / 2。</p>
+<ul class="simple">
+<li><p>为什么？尝试简单说明（传达思想即可，不要求严格证明）。</p></li>
+</ul>
+<p>已知以上结论，<strong>在考虑溢出的情况下</strong>，假设我们通过逐个比较得到 Stride 最小的进程，请设计一个合适的比较函数，用来正确比较两个 Stride 的真正大小：</p>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-UnVzdA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-UnVzdA==" name="UnVzdA==" role="tab" tabindex="0">Rust</button><button aria-controls="panel-0-Qw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-Qw==" name="Qw==" role="tab" tabindex="-1">C</button></div><div aria-labelledby="tab-0-UnVzdA==" class="sphinx-tabs-panel group-tab" id="panel-0-UnVzdA==" name="UnVzdA==" role="tabpanel" tabindex="0"><div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="kd">let</span><span class="w"> </span><span class="n">BIG_STRIDE</span>: <span class="kt">u64</span> <span class="o">=</span><span class="w"> </span><span class="mh">0xffffffffffffffff_</span><span class="k">u64</span><span class="p">;</span><span class="w"></span>
+<span class="kt">i32</span><span class="w"> </span><span class="n">cmp</span><span class="p">(</span><span class="n">a</span>: <span class="kt">u64</span><span class="p">,</span><span class="w"> </span><span class="n">b</span>: <span class="kt">u64</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// YOUR CODE HERE</span>
+<span class="w">    </span><span class="c1">// return 1 if a &gt; b</span>
+<span class="w">    </span><span class="c1">// return -1 if a &lt; b</span>
+<span class="w">    </span><span class="c1">// return 0 if a == b</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-Qw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-Qw==" name="Qw==" role="tabpanel" tabindex="0"><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">typedef</span><span class="w"> </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">Stride_t</span><span class="p">;</span><span class="w"></span>
+<span class="k">const</span><span class="w"> </span><span class="n">Stride_t</span><span class="w"> </span><span class="n">BIG_STRIDE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0xffffffffffffffffULL</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">cmp</span><span class="p">(</span><span class="n">Stride_t</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">Stride_t</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="c1">// YOUR CODE HERE</span>
+<span class="w">    </span><span class="c1">// return 1 if a &gt; b</span>
+<span class="w">    </span><span class="c1">// return -1 if a &lt; b</span>
+<span class="w">    </span><span class="c1">// return 0 if a == b</span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div></div>
+<p>例子：假设使用 8 bits 储存 stride, BigStride = 255。那么：
+* <cite>cmp(125, 255) == 1</cite>
+* <cite>cmp(129, 255) == -1</cite></p>
+</div>
+<div class="section" id="id4">
+<h2>实验目录要求<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>├── os(内核实现)
+│   └── ...
+├── reports (不是 report)
+│   ├── lab1.md/pdf
+│   └── ...
+├── ...
+</pre></div>
+</div>
+<p>测试时 os/Makefile 和 user/* 将被替换。</p>
+</div>
+<div class="section" id="id5">
+<span id="id6"></span><h2>报告要求<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<ul>
+<li><p>[暂未支持] <code class="docutils literal notranslate"><span class="pre">lab1.pdf</span></code> CI 网站提交，注明姓名学号。</p></li>
+<li><p>注意目录要求，报告命名 <code class="docutils literal notranslate"><span class="pre">lab1.md</span></code> 或 <code class="docutils literal notranslate"><span class="pre">lab1.pdf</span></code>，位于 <code class="docutils literal notranslate"><span class="pre">reports</span></code> 目录下。命名错误视作没有提交。后续实验同理。</p></li>
+<li><p>完成问答问题。</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>ch1: <a class="reference internal" href="../chapter1/1exercise.html#ch1"><span class="std std-ref">ch1问答作业</span></a></p></li>
+<li><p>ch2: <a class="reference internal" href="../chapter2/1exercise.html#ch2"><span class="std std-ref">ch2问答作业</span></a></p></li>
+<li><p>ch3: <a class="reference internal" href="#ch3"><span class="std std-ref">ch3问答作业</span></a></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>[可选，不占分] 你对本次实验设计及难度/工作量的看法，以及有哪些需要改进的地方，欢迎畅所欲言。</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>请勿抄袭，报告会进行抽样查重！</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>参考信息<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>如果有兴趣进一步了解 stride 调度相关内容，可以尝试看看：</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://people.cs.umass.edu/~mcorner/courses/691J/papers/PS/waldspurger_stride/waldspurger95stride.pdf">作者 Carl A. Waldspurger 写这个调度算法的原论文</a></p></li>
+<li><p><a class="reference external" href="http://www.waldspurger.org/carl/papers/phd-mit-slides.pdf">作者 Carl A. Waldspurger 的博士生答辩slide</a></p></li>
+<li><p><a class="reference external" href="https://nankai.gitbook.io/ucore-os-on-risc-v64/lab6/tiao-du-suan-fa-kuang-jia#stride-suan-fa">南开大学实验指导中对Stride算法的部分介绍</a></p></li>
+<li><p><a class="reference external" href="https://cs.nyu.edu/~rgrimm/teaching/sp08-os/stride.pdf">NYU OS课关于Stride Scheduling的Slide</a></p></li>
+</ul>
+<p>如果有兴趣进一步了解用户态线程实现的相关内容，可以尝试看看：</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/chyyuu/os_kernel_lab/tree/v4-user-std-multitask">user-multitask in rv64</a></p></li>
+<li><p><a class="reference external" href="https://github.com/cfsamson/example-greenthreads">绿色线程 in x86</a></p></li>
+<li><p><a class="reference external" href="https://cfsamson.gitbook.io/green-threads-explained-in-200-lines-of-rust/">x86版绿色线程的设计实现</a></p></li>
+<li><p><a class="reference external" href="https://blog.csdn.net/qq_31601743/article/details/97514081?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control&amp;dist_request_id=&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.control">用户级多线程的切换原理</a></p></li>
+</ul>
+</div>
 </div>
 
         </article>
@@ -272,8 +443,36 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            目录
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">chapter3 练习</a><ul>
+<li><a class="reference internal" href="#id1">本章任务</a></li>
+<li><a class="reference internal" href="#id2">编程作业</a><ul>
+<li><a class="reference internal" href="#sys-write">sys_write 参数检查</a></li>
+<li><a class="reference internal" href="#stride">stride 调度算法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ch3">问答作业</a></li>
+<li><a class="reference internal" href="#id4">实验目录要求</a></li>
+<li><a class="reference internal" href="#id5">报告要求</a></li>
+<li><a class="reference internal" href="#id7">参考信息</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -317,6 +516,8 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
+    <script src="../_static/tabs.js"></script>
     <script src="../_static/translations.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
