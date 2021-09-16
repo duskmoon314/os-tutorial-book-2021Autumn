@@ -13,6 +13,12 @@ os-Tutorial-Book 2021 Autumn
 
    0setup-devel-env
    chapter1/index
+   chapter2/index
+   chapter3/index
+   chapter4/index
+   chapter5/index
+   chapter6/index
+   chapter7/index
 
 .. toctree::
    :maxdepth: 2
