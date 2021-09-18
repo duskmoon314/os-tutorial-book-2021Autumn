@@ -414,7 +414,9 @@ rustc <span class="m">1</span>.57.0-nightly <span class="o">(</span>97032a6df <s
 <p>在更新的 20.10 和 21.04 中，apt 安装的版本为 10 以上，应该不会有问题。</p>
 </div>
 </div><div aria-labelledby="tab-4-bWFjT1M=" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-4-bWFjT1M=" name="bWFjT1M=" role="tabpanel" tabindex="0"><p>用 macOS 还是建议安个 homebrew 呢</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew install riscv-gnu-toolchain
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加 riscv/riscv tap 以安装</span>
+brew tap riscv/riscv
+brew install riscv-gnu-toolchain
 </pre></div>
 </div>
 <div class="admonition note">

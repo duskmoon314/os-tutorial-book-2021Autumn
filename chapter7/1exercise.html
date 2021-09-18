@@ -135,7 +135,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -221,7 +221,7 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
@@ -229,6 +229,196 @@
         <article role="main">
           <div class="section" id="chapter7">
 <h1>chapter7 练习<a class="headerlink" href="#chapter7" title="永久链接至标题">¶</a></h1>
+<ul class="simple">
+<li><p>本节难度： <strong>理解文件系统比较费事，编程难度适中</strong></p></li>
+</ul>
+<div class="section" id="id1">
+<h2>本章任务<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-UnVzdA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-0-UnVzdA==" name="UnVzdA==" role="tab" tabindex="0">Rust</button><button aria-controls="panel-0-Qw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-0-Qw==" name="Qw==" role="tab" tabindex="-1">C</button></div><div aria-labelledby="tab-0-UnVzdA==" class="sphinx-tabs-panel group-tab" id="panel-0-UnVzdA==" name="UnVzdA==" role="tabpanel" tabindex="0"><ul class="simple">
+<li><p>在 os 目录下 <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">run</span> <span class="pre">TEST=1</span></code> 加载所有测例， <code class="docutils literal notranslate"><span class="pre">test_usertest</span></code> 打包了所有你需要通过的测例，你也可以通过修改这个文件调整本地测试的内容。</p></li>
+<li><p>你的内核必须前向兼容，能通过前一章的所有测例。</p></li>
+<li><p>完成本章问答作业。</p></li>
+<li><p>完成本章编程作业。</p></li>
+<li><p>最终，完成实验报告并 push 你的 ch7 分支到远程仓库。</p></li>
+</ul>
+</div><div aria-labelledby="tab-0-Qw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-0-Qw==" name="Qw==" role="tabpanel" tabindex="0"><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ch7b_usertest</span></code> <code class="docutils literal notranslate"><span class="pre">ch7_mergetest</span></code></p></li>
+<li><p>merge ch6 的改动，然后再次测试 ch6_usertest 和 ch7b_usertest。</p></li>
+<li><p>完成本章问答作业。</p></li>
+<li><p>完成本章编程作业。</p></li>
+<li><p>最终，完成实验报告并 push 你的 ch7 分支到远程仓库。</p></li>
+</ul>
+</div></div>
+</div>
+<div class="section" id="id2">
+<h2>编程作业<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id3">
+<h3>硬链接<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>你的电脑桌面是咋样的？是放满了图标吗？反正我的 windows 是这样的。显然很少人会真的把可执行文件放到桌面上，桌面图标其实都是一些快捷方式。或者用 unix 的术语来说：软链接。为了减少工作量，我们今天来实现软链接的兄弟： <a class="reference external" href="https://en.wikipedia.org/wiki/Hard_link">硬链接</a> 。</p>
+<p>硬链接要求两个不同的目录项指向同一个文件，在我们的文件系统中也就是两个不同名称目录项指向同一个磁盘块。本节要求实现三个系统调用 <code class="docutils literal notranslate"><span class="pre">sys_linkat</span></code> <code class="docutils literal notranslate"><span class="pre">sys_unlinkat</span></code> <code class="docutils literal notranslate"><span class="pre">sys_stat</span></code> 。注意在测例中 <code class="docutils literal notranslate"><span class="pre">sys_open</span></code> 的接口定义也发生了变化。</p>
+<p><strong>linkat</strong>：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>syscall ID: 37</p></li>
+<li><p>功能：创建一个文件的一个硬链接， <a class="reference external" href="https://linux.die.net/man/2/linkat">linkat标准接口</a> 。</p></li>
+<li><p>Ｃ接口： <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">linkat(int</span> <span class="pre">olddirfd,</span> <span class="pre">char*</span> <span class="pre">oldpath,</span> <span class="pre">int</span> <span class="pre">newdirfd,</span> <span class="pre">char*</span> <span class="pre">newpath,</span> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">flags)</span></code></p></li>
+<li><p>Rust 接口： <code class="docutils literal notranslate"><span class="pre">fn</span> <span class="pre">linkat(olddirfd:</span> <span class="pre">i32,</span> <span class="pre">oldpath:</span> <span class="pre">*const</span> <span class="pre">u8,</span> <span class="pre">newdirfd:</span> <span class="pre">i32,</span> <span class="pre">newpath:</span> <span class="pre">*const</span> <span class="pre">u8,</span> <span class="pre">flags:</span> <span class="pre">u32)</span> <span class="pre">-&gt;</span> <span class="pre">i32</span></code></p></li>
+<li><dl class="simple">
+<dt>参数：</dt><dd><ul>
+<li><p>olddirfd，newdirfd: 仅为了兼容性考虑，本次实验中始终为 AT_FDCWD (-100)，可以忽略。</p></li>
+<li><p>flags: 仅为了兼容性考虑，本次实验中始终为 0，可以忽略。</p></li>
+<li><p>oldpath：原有文件路径</p></li>
+<li><p>newpath: 新的链接文件路径。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>说明：</dt><dd><ul>
+<li><p>为了方便，不考虑新文件路径已经存在的情况 (属于未定义行为)，除非链接同名文件。</p></li>
+<li><p>返回值：如果出现了错误则返回 -1，否则返回 0。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>可能的错误</dt><dd><ul>
+<li><p>链接同名文件。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>unlinkat</strong>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>syscall ID: 35</p></li>
+<li><p>功能：取消一个文件路径到文件的链接, <a class="reference external" href="https://linux.die.net/man/2/unlinkat">unlinkat标准接口</a> 。</p></li>
+<li><p>Ｃ接口： <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">unlinkat(int</span> <span class="pre">dirfd,</span> <span class="pre">char*</span> <span class="pre">path,</span> <span class="pre">unsigned</span> <span class="pre">int</span> <span class="pre">flags)</span></code></p></li>
+<li><p>Rust 接口： <code class="docutils literal notranslate"><span class="pre">fn</span> <span class="pre">unlinkat(dirfd:</span> <span class="pre">i32,</span> <span class="pre">path:</span> <span class="pre">*const</span> <span class="pre">u8,</span> <span class="pre">flags:</span> <span class="pre">u32)</span> <span class="pre">-&gt;</span> <span class="pre">i32</span></code></p></li>
+<li><dl class="simple">
+<dt>参数：</dt><dd><ul>
+<li><p>dirfd: 仅为了兼容性考虑，本次实验中始终为 AT_FDCWD (-100)，可以忽略。</p></li>
+<li><p>flags: 仅为了兼容性考虑，本次实验中始终为 0，可以忽略。</p></li>
+<li><p>path：文件路径。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>说明：</dt><dd><ul>
+<li><p>为了方便，不考虑使用 unlink 彻底删除文件的情况。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>返回值：如果出现了错误则返回 -1，否则返回 0。</p></li>
+<li><dl class="simple">
+<dt>可能的错误</dt><dd><ul>
+<li><p>文件不存在。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p><strong>fstat</strong>:</p>
+<blockquote>
+<div><ul>
+<li><p>syscall ID: 80</p></li>
+<li><p>功能：获取文件状态。</p></li>
+<li><p>Ｃ接口： <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">fstat(int</span> <span class="pre">fd,</span> <span class="pre">struct</span> <span class="pre">Stat*</span> <span class="pre">st)</span></code></p></li>
+<li><p>Rust 接口： <code class="docutils literal notranslate"><span class="pre">fn</span> <span class="pre">fstat(fd:</span> <span class="pre">i32,</span> <span class="pre">st:</span> <span class="pre">*mut</span> <span class="pre">Stat)</span> <span class="pre">-&gt;</span> <span class="pre">i32</span></code></p></li>
+<li><dl>
+<dt>参数：</dt><dd><ul class="simple">
+<li><p>fd: 文件描述符</p></li>
+<li><p>st: 文件状态结构体</p></li>
+</ul>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-UnVzdA==" aria-selected="true" class="sphinx-tabs-tab group-tab" id="tab-1-UnVzdA==" name="UnVzdA==" role="tab" tabindex="0">Rust</button><button aria-controls="panel-1-Qw==" aria-selected="false" class="sphinx-tabs-tab group-tab" id="tab-1-Qw==" name="Qw==" role="tab" tabindex="-1">C</button></div><div aria-labelledby="tab-1-UnVzdA==" class="sphinx-tabs-panel group-tab" id="panel-1-UnVzdA==" name="UnVzdA==" role="tabpanel" tabindex="0"><div class="highlight-rust notranslate"><div class="highlight"><pre><span></span><span class="cp">#[repr(C)]</span><span class="w"></span>
+<span class="cp">#[derive(Debug)]</span><span class="w"></span>
+<span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Stat</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// 文件所在磁盘驱动器号</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">dev</span>: <span class="kt">u64</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// inode 文件所在 inode 编号</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">ino</span>: <span class="kt">u64</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// 文件类型</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">mode</span>: <span class="nc">StatMode</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// 硬链接数量，初始为1</span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="n">nlink</span>: <span class="kt">u32</span><span class="p">,</span><span class="w"></span>
+<span class="w">    </span><span class="sd">/// 无需考虑，为了兼容性设计</span>
+<span class="w">    </span><span class="n">pad</span>: <span class="p">[</span><span class="kt">u64</span><span class="p">;</span><span class="w"> </span><span class="mi">7</span><span class="p">],</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="sd">/// StatMode 定义：</span>
+<span class="n">bitflags</span><span class="o">!</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">StatMode</span>: <span class="kt">u32</span> <span class="p">{</span><span class="w"></span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">NULL</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="sd">/// directory</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">DIR</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="mo">0o040000</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="sd">/// ordinary regular file</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FILE</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="mo">0o100000</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="p">}</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-1-Qw==" class="sphinx-tabs-panel group-tab" hidden="true" id="panel-1-Qw==" name="Qw==" role="tabpanel" tabindex="0"><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">Stat</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">uint64</span><span class="w"> </span><span class="n">dev</span><span class="p">,</span><span class="w">     </span><span class="c1">// 文件所在磁盘驱动器号</span>
+<span class="w">    </span><span class="n">uint64</span><span class="w"> </span><span class="n">ino</span><span class="p">,</span><span class="w">     </span><span class="c1">// inode 文件所在 inode 编号</span>
+<span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">mode</span><span class="p">,</span><span class="w">    </span><span class="c1">// 文件类型</span>
+<span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">nlink</span><span class="p">,</span><span class="w">   </span><span class="c1">// 硬链接数量，初始为1</span>
+<span class="p">}</span><span class="w"></span>
+
+<span class="c1">// 文件类型只需要考虑:</span>
+<span class="cp">#define DIR 0x040000                </span><span class="c1">// directory</span>
+<span class="cp">#define FILE 0x100000               </span><span class="c1">// ordinary regular file</span>
+</pre></div>
+</div>
+</div></div>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<p>正确实现后，你的 os 应该能够正确运行 file* 对应的测试用例，在 shell 中执行 usertest 来执行测试。</p>
+<div class="admonition hint">
+<p class="admonition-title">提示</p>
+<ul class="simple">
+<li><p>需要给 inode 和 dinode 都增加 link 的计数，但强烈建议不要改变整个数据结构的大小，事实上，推荐你修改一个 pad。</p></li>
+<li><ol class="upperalpha simple" start="3">
+<li><p>os 和 nfs 的修改需要同步，只不过 nfs 比较简单，只需要初始化 link 计数为 1 就行 (可以通过修改 <code class="docutils literal notranslate"><span class="pre">ialloc</span></code> 来实现)。</p></li>
+</ol>
+</li>
+<li><p>理论上讲，unlink 有删除文件的语义，如果 link 计数为 0，需要删除 inode 和对应的数据块，但我们没有设置相关的测试，如果仅仅是想拿到测试分数，可以不实现这一点。</p></li>
+<li><p>理论上讲，想要测试文件系统的属性需要重启机器，但我们没有这样做。一方面是为了测试的方便，另一方面也留了一条后路。。。。。。。。。</p></li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="admonition-title">注解</p>
+<p><strong>如何调试 easy-fs</strong> (使用 Rust 完成实验的同学请看)</p>
+<p>如果你在第一章练习题中已经借助 <code class="docutils literal notranslate"><span class="pre">log</span></code> crate 实现了日志功能，那么你可以直接在 <code class="docutils literal notranslate"><span class="pre">easy-fs</span></code> 中引入 <code class="docutils literal notranslate"><span class="pre">log</span></code> crate，通过 <code class="docutils literal notranslate"><span class="pre">log::info!/debug!</span></code> 等宏即可进行调试并在内核中看到日志输出。具体来说，在 <code class="docutils literal notranslate"><span class="pre">easy-fs</span></code> 中的修改是：在 <code class="docutils literal notranslate"><span class="pre">easy-fs/Cargo.toml</span></code> 的依赖中加入一行 <code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">=</span> <span class="pre">"0.4.0"</span></code>，然后在 <code class="docutils literal notranslate"><span class="pre">easy-fs/src/lib.rs</span></code> 中加入一行 <code class="docutils literal notranslate"><span class="pre">extern</span> <span class="pre">crate</span> <span class="pre">log</span></code> 。</p>
+<p>你也可以完全在用户态进行调试。仿照 <code class="docutils literal notranslate"><span class="pre">easy-fs-fuse</span></code> 建立一个在当前操作系统中运行的应用程序，将测试逻辑写在 <code class="docutils literal notranslate"><span class="pre">main</span></code> 函数中。这个时候就可以将它引用的 <code class="docutils literal notranslate"><span class="pre">easy-fs</span></code> 的 <code class="docutils literal notranslate"><span class="pre">no_std</span></code> 去掉并使用 <code class="docutils literal notranslate"><span class="pre">println!</span></code> 进行调试。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>问答作业<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<ol class="arabic simple">
+<li><p>目前的文件系统只有单级目录，假设想要支持多级文件目录，请描述你设想的实现方式，描述合理即可。</p></li>
+<li><p>在有了多级目录之后，我们就也可以为一个目录增加硬链接了。在这种情况下，文件树中是否可能出现环路(软硬链接都可以，鼓励多尝试)？你认为应该如何解决？请在你喜欢的系统上实现一个环路，描述你的实现方式以及系统提示、实际测试结果。</p></li>
+</ol>
+</div>
+<div class="section" id="id6">
+<h2>报告要求<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<ul class="simple">
+<li><p>[暂未支持] <code class="docutils literal notranslate"><span class="pre">lab5.pdf</span></code> CI 网站提交，注明姓名学号。</p></li>
+<li><p>注意目录要求，报告命名 <code class="docutils literal notranslate"><span class="pre">lab5.md</span></code> 或 <code class="docutils literal notranslate"><span class="pre">lab5.pdf</span></code>，位于 <code class="docutils literal notranslate"><span class="pre">reports</span></code> 目录下。命名错误视作没有提交。不需要删除 <code class="docutils literal notranslate"><span class="pre">lab1.md/pdf</span></code> <code class="docutils literal notranslate"><span class="pre">lab2.md/pdf</span></code> <code class="docutils literal notranslate"><span class="pre">lab3.md/pdf</span></code> <code class="docutils literal notranslate"><span class="pre">lab4.md/pdf</span></code>。</p></li>
+<li><p>完成 ch7 问答作业。</p></li>
+<li><p>[可选，不占分] 你对本次实验设计及难度的看法。</p></li>
+</ul>
+</div>
 </div>
 
         </article>
@@ -272,8 +462,33 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            目录
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">chapter7 练习</a><ul>
+<li><a class="reference internal" href="#id1">本章任务</a></li>
+<li><a class="reference internal" href="#id2">编程作业</a><ul>
+<li><a class="reference internal" href="#id3">硬链接</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">问答作业</a></li>
+<li><a class="reference internal" href="#id6">报告要求</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -317,6 +532,7 @@ var addUtterances = () => {
 }
 commentsRunWhenDOMLoaded(addUtterances);
 </script>
+    <script src="../_static/tabs.js"></script>
     <script src="../_static/translations.js"></script>
     </body>
 </html>

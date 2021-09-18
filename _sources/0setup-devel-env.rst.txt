@@ -249,6 +249,8 @@ Windows10 用户可以通过系统内置的 **WSL2** 虚拟机（请不要使用
 
             .. code-block:: bash
 
+               # 添加 riscv/riscv tap 以安装
+               brew tap riscv/riscv
                brew install riscv-gnu-toolchain
 
             .. note::
