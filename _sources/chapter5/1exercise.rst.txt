@@ -66,7 +66,7 @@ spawn 系统调用定义( `标准spawn看这里 <https://man7.org/linux/man-page
     
     .. code-block:: c 
 
-        int main(){
+        int main() {
             int val = 2;
             
             printf("%d", 0);
@@ -94,7 +94,7 @@ spawn 系统调用定义( `标准spawn看这里 <https://man7.org/linux/man-page
         int main() {
             fork() && fork() && fork() || fork() && fork() || fork() && fork();
             printf("A");
-            return 0' 
+            return 0;
         }
 
     [选做，不占分] 更进一步，如果给出一个 ``&&`` ``||`` 的序列，你如何设计一个程序来得到答案？
